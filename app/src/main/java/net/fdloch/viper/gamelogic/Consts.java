@@ -7,6 +7,6 @@ public class Consts {
 
     public static final int BOARD_COLUMN_COUNT = 15;
     public static final int BOARD_ROW_COUNT = 15;
-
+    public static final int SNAKE_DEFAULT_LENGTH = 5;
 
 }
