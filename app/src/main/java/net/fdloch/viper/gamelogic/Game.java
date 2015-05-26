@@ -19,8 +19,8 @@ public class Game {
 
     public void nextRound() {
         for (Snake s : snakes) {
-            s.move();
-            if (s.doesSnakeBiteItself()) {
+            MoveResult res = s.move();
+            if (res == MoveResult.GAME_OVER) {
                 gameOver();
             }
         }

@@ -25,7 +25,7 @@ public class BoardPosition {
         }
 
         if (this.getRow() < 0) {
-            this.setColumn(Consts.BOARD_ROW_COUNT - 1);
+            this.setRow(Consts.BOARD_ROW_COUNT - 1);
         }
 
         if (this.getRow() == Consts.BOARD_ROW_COUNT) {

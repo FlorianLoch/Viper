@@ -27,35 +27,39 @@ public abstract class Snake {
         return Collections.unmodifiableList(pathway);
     }
 
-    public boolean doesSnakeBiteItself() {
-        return (isPositionTwiceInPathway(pathway.getFirst()) || isPositionTwiceInPathway(pathway.getLast()));
+    public boolean wouldSnakeBiteItself(BoardPosition newHeadPosition) {
+        return isPositionInPathway(newHeadPosition);
     }
 
-    protected final boolean isPositionTwiceInPathway(BoardPosition position) {
-        int matchCounter = 0;
+    protected final boolean isPositionInPathway(BoardPosition position) {
         for (BoardPosition p : pathway) {
             if (p.equals(position)) {
-                matchCounter++;
-
-                if (matchCounter == 2) return true;
+                return true;
             }
         }
 
         return false;
     }
 
-    public void move() {
+    public MoveResult move() {
         Direction dir = determineMovingDirection();
 
         //Move head forward
         BoardPosition newHeadPosition = dir.nextPositionOriginatingFrom(pathway.getFirst());
-        pathway.addFirst(newHeadPosition);
 
         //Strip tail only if snake doesn't get longer due to food item
         Item item = game.getItemAt(newHeadPosition);
         if (!item.isFood()) {
             pathway.removeLast();
         }
+
+        if (wouldSnakeBiteItself(newHeadPosition)) {
+            return MoveResult.GAME_OVER;
+        }
+
+        pathway.addFirst(newHeadPosition);
+
+        return MoveResult.ROGER_ROGER;
     }
 
     public abstract Direction determineMovingDirection();

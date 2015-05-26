@@ -1,7 +1,5 @@
 package net.fdloch.viper.gamelogic;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -19,7 +17,7 @@ public class AISnake extends Snake {
         Direction[] shuffledDirection = shuffleArray(Direction.values());
         for (Direction direction : shuffledDirection) {
             BoardPosition newHeadPosition = direction.nextPositionOriginatingFrom(headPosition);
-            if (!isPositionTwiceInPathway(newHeadPosition)) {
+            if (!isPositionInPathway(newHeadPosition)) {
                 return direction;
             }
         }

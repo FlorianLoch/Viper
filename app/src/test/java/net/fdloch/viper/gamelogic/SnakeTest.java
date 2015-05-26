@@ -29,11 +29,11 @@ public class SnakeTest {
             }
         };
 
-        assertFalse(instance.doesSnakeBiteItself());
+        assertFalse(instance.wouldSnakeBiteItself(new BoardPosition(0, 0)));
 
         //Make snake bite itself
         instance.determineMovingDirection();
 
-        assertTrue(instance.doesSnakeBiteItself());
+        assertTrue(instance.wouldSnakeBiteItself(new BoardPosition(0, 0)));
     }
 }

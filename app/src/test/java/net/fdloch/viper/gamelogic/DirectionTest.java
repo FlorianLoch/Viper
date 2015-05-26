@@ -33,7 +33,8 @@ public class DirectionTest {
                 {new BoardPosition(0, 0), Direction.EAST, new BoardPosition(1, 0), "Default behaviour, shift to the right"},
                 {new BoardPosition(1, 1), Direction.NORTH, new BoardPosition(1, 2), "Default behaviour, shift upwards"},
                 {new BoardPosition(Consts.BOARD_COLUMN_COUNT - 1, 0), Direction.EAST, new BoardPosition(0, 0), "Overflow handling to the right"},
-                {new BoardPosition(Consts.BOARD_COLUMN_COUNT - 1, 0), Direction.WEST, new BoardPosition(Consts.BOARD_COLUMN_COUNT - 2, 0), "Default behaviour, shift to the left"}
+                {new BoardPosition(Consts.BOARD_COLUMN_COUNT - 1, 0), Direction.WEST, new BoardPosition(Consts.BOARD_COLUMN_COUNT - 2, 0), "Default behaviour, shift to the left"},
+                {new BoardPosition(Consts.BOARD_COLUMN_COUNT - 1, 0), Direction.SOUTH, new BoardPosition(Consts.BOARD_COLUMN_COUNT - 1, Consts.BOARD_ROW_COUNT - 1), "Overflow handling for floor"}
         });
     }
 

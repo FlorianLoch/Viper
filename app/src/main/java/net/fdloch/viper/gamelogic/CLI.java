@@ -24,7 +24,7 @@ public class CLI {
             game.nextRound();
             System.out.println(game.toString());
 
-            Thread.sleep(1000);
+            Thread.sleep(300);
         }
     }
 
