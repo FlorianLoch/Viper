@@ -32,6 +32,10 @@ public abstract class Snake {
     }
 
     protected final boolean isPositionInPathway(BoardPosition position) {
+        return isPositionInPathway(pathway, position);
+    }
+
+    protected static boolean isPositionInPathway(LinkedList<BoardPosition> pathway, BoardPosition position) {
         for (BoardPosition p : pathway) {
             if (p.equals(position)) {
                 return true;

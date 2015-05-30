@@ -9,7 +9,7 @@ public abstract class Item {
 
     public abstract void getsConsumed();
 
-    public abstract char getSign();
+    public abstract String getSign();
 
     public static Item NO_ITEM = new Item() {
         @Override
@@ -23,8 +23,8 @@ public abstract class Item {
         }
 
         @Override
-        public char getSign() {
-            return '/';
+        public String getSign() {
+            return " ";
         }
     };
 }

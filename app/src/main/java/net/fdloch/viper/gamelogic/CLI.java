@@ -1,5 +1,6 @@
 package net.fdloch.viper.gamelogic;
 
+import java.io.IOException;
 import java.util.Timer;
 
 /**
@@ -24,8 +25,15 @@ public class CLI {
             game.nextRound();
             System.out.println(game.toString());
 
+            clearCLI();
+
             Thread.sleep(300);
         }
+    }
+
+    private static void clearCLI() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
 }

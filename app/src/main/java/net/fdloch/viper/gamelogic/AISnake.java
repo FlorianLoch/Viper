@@ -1,29 +1,66 @@
 package net.fdloch.viper.gamelogic;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
+import java.util.Stack;
 
 /**
  * Created by florian on 26.05.15.
  */
 public class AISnake extends Snake {
+    protected Stack<Direction> pathToFood = new Stack<>();
+
     public AISnake(Game game) {
         super(game);
     }
 
     @Override
     public Direction determineMovingDirection() {
-        BoardPosition headPosition = pathway.getFirst();
-
-        Direction[] shuffledDirection = shuffleArray(Direction.values());
-        for (Direction direction : shuffledDirection) {
-            BoardPosition newHeadPosition = direction.nextPositionOriginatingFrom(headPosition);
-            if (!isPositionInPathway(newHeadPosition)) {
-                return direction;
+        if (pathToFood.isEmpty()) {
+            if (!determinePathToFood(game.getFoodItemPosition())) {
+                return Direction.EAST; //Die by going eastwards
             }
         }
 
-        System.out.println("LOST");
-        return Direction.EAST;
+        return pathToFood.pop();
+    }
+
+    protected boolean determinePathToFood(BoardPosition foodPosition) {
+        LinkedList<BoardPosition> virtPathway = new LinkedList<>(pathway);
+        pathToFood = new Stack<>();
+
+        return determinePathToFoodRecursion(virtPathway, foodPosition);
+    }
+
+    protected boolean determinePathToFoodRecursion(LinkedList<BoardPosition> virtPathway, BoardPosition foodPosition) {
+        BoardPosition head = virtPathway.getFirst();
+
+        Direction direction = head.directionRelativeTo(foodPosition);
+        BoardPosition newHead = null;
+        for (int i = 0; i < 4; i++) {
+            LinkedList<BoardPosition> newVirtPathway = new LinkedList<>(virtPathway);
+            newVirtPathway.removeLast();
+
+            newHead = direction.nextPositionOriginatingFrom(head);
+
+            if (newHead.equals(foodPosition)) {
+                pathToFood.push(direction);
+                return true;
+            }
+
+            if (!isPositionInPathway(newVirtPathway, newHead)) {
+                newVirtPathway.addFirst(newHead);
+                if (determinePathToFoodRecursion(newVirtPathway, foodPosition)) {
+                    pathToFood.push(direction);
+                    return true;
+                }
+            }
+
+            direction = direction.nextDirectionClockwise();
+        }
+
+        return false;
     }
 
     private <T> T[] shuffleArray(T[] array) {

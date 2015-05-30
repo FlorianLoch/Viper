@@ -49,6 +49,45 @@ public class BoardPosition {
         this.row = row;
     }
 
+    public Direction directionRelativeTo(BoardPosition target) {
+        Direction dir;
+
+        //First resolve horizontal component
+        if (column != target.column) {
+            int lengthWest;
+            int lengthEast;
+            if (column > target.column) {
+                lengthWest = column - target.column;
+                lengthEast = Consts.BOARD_COLUMN_COUNT - column + target.column;
+            }
+            else {
+                lengthWest = column + Consts.BOARD_COLUMN_COUNT - target.column;
+                lengthEast = target.column - column;
+            }
+
+            if (lengthWest < lengthEast) {
+                return Direction.WEST;
+            }
+            return Direction.EAST;
+        }
+
+        int lengthNorth;
+        int lengthSouth;
+        if (row > target.row) {
+            lengthNorth = Consts.BOARD_ROW_COUNT - row + target.row;
+            lengthSouth = row - target.row;
+        }
+        else {
+            lengthNorth = target.row - row;
+            lengthSouth = row + Consts.BOARD_ROW_COUNT - target.row;
+        }
+
+        if (lengthNorth < lengthSouth) {
+            return Direction.NORTH;
+        }
+        return Direction.SOUTH;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
