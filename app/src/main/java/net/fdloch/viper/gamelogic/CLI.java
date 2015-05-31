@@ -9,7 +9,14 @@ import java.util.Timer;
 public class CLI {
 
     public static void main(String[] args) throws InterruptedException {
-        Game game = new Game();
+        Game game = new Game() {
+            @Override
+            public void gameOver() {
+                System.out.println("GAME OVER!");
+                System.out.println(this.toString());
+                System.exit(0);
+            }
+        };
         Snake snake = new Snake(game) {
             @Override
             public Direction determineMovingDirection() {
@@ -17,17 +24,21 @@ public class CLI {
             }
         };
 
-        game.addSnake(new AISnake(game));
+        game.addSnake(new SmartSnake(game));
 
         game.addFoodItem(new BoardPosition(7, 2));
 
+        int i = 0;
         while (1 != 2) {
             game.nextRound();
-            System.out.println(game.toString());
+            if (i % 50 == 0) {
+                System.out.println(game.toString());
+                //Thread.sleep(300);
+            }
 
-            clearCLI();
+            //clearCLI();
 
-            Thread.sleep(300);
+            i++;
         }
     }
 

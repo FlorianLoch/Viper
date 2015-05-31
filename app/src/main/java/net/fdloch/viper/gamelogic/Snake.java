@@ -52,7 +52,7 @@ public abstract class Snake {
         BoardPosition newHeadPosition = dir.nextPositionOriginatingFrom(pathway.getFirst());
 
         //Strip tail only if snake doesn't get longer due to food item
-        Item item = game.getItemAt(newHeadPosition);
+        Item item = game.getItemAt(newHeadPosition, true);
         if (!item.isFood()) {
             pathway.removeLast();
         }
@@ -62,6 +62,8 @@ public abstract class Snake {
         }
 
         pathway.addFirst(newHeadPosition);
+
+        item.getsConsumed();
 
         return MoveResult.ROGER_ROGER;
     }

@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Created by florian on 25.05.15.
  */
-public class Game {
+public abstract class Game {
     private ArrayList<Snake> snakes = new ArrayList<>();
     private HashMap<BoardPosition, Item> items = new HashMap<>();
     private BoardPosition foodItemPosition = null;
@@ -86,10 +86,7 @@ public class Game {
         return false;
     }
 
-    void gameOver() {
-        System.out.println("GAME OVER!");
-        System.exit(0);
-    }
+    public abstract void gameOver();
 
     @NonNull
     public Item getItemAt(BoardPosition headPosition) {
@@ -111,7 +108,7 @@ public class Game {
 
     @Override
     public String toString() {
-        StringBuilder out = new StringBuilder(String.format("After %d moves:\n", moves));
+        StringBuilder out = new StringBuilder(String.format("After %d moves; Length of snake: %d\n", moves, Consts.SNAKE_DEFAULT_LENGTH + foodConsumed));
 
         for (Snake s : snakes) {
             List<BoardPosition> pathway = s.getPathway();
